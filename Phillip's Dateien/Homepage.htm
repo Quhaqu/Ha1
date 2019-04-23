@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    .header {
+  background-color: #173e43;
+  text-align: center;
+  padding: 20px;
+}
+   table {
+     border-collapse: collapse;
+     width: 60%;
+     align-content: center;
+   }
+
+   th, td {
+     padding: 8px;
+     text-align: left;
+     border-bottom: 1px solid #ddd;
+   }
+   </style>
+    <title>ToDo Manager</title>
+  </head>
+  <body>
+    <div id="navbar" >
+      <nav>
+        <a href="./new.htm">Add new</a> |
+        <a href="./tut.htm">Turorial</a> |
+        <a href="./Impressum.htm">Impressum</a>
+    </div>
+
+      <header>
+        <h1>Todo Manager</h1>
+      </header>
+
+    <div>
+      <h2> Overview: </h2>
+      <table id= "tasktable"  >
+      <tr>
+        <th> Task desription </th>
+        <th> task completion percentage </th>
+        <th> Deadline </th>
+        <th> Remove task </th>
+      </tr>
+      <tr>
+        <td> clean stuff </td>
+        <td> 0% </td>
+        <td> tomorrow evening</td>
+        <td> <button type="button" class="btn btn-primary"> X </button>
+      </tr>
+      <tr>
+        <td> program stuff </td>
+        <td> 0% </td>
+        <td> yesterday</td>
+        <td> <button type="button" class="btn btn-primary"> X </button>
+      </tr>
+
+      </table>
+    <a href="./new.htm" class="btn btn-info" > + </a>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
