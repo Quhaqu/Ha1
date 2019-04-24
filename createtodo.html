@@ -13,7 +13,23 @@
   <body>
     <h1>Create Todo</h1>
 
-    <div id="navbar" style="float: right;">
+    <form>
+      <div class="form-group">
+        <label>Todo Text</label>
+        <input type="Text" class="form-control" placeholder="Beispielseite: Neue Seite mit dem Bootstrap Framework anlegen">
+      </div>
+      <div class="form-group">
+        <label>Deadline</label>
+        <input type="date" placeholder="Beispielseite:">
+      </div>
+      <div class="form-group">
+        <label>Abgearbeitet status</label>
+        <input type="number">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div id="navbar" style="right: 0; position: absolute; bottom: 0">
       <nav>
         <a href="todos.html">Todos</a>|
         <a href="createtodo.html">Add new</a> |
