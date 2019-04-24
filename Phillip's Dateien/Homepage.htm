@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+       <script src="scripts.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
@@ -28,6 +28,7 @@
     <title>ToDo Manager</title>
   </head>
   <body>
+
     <div id="navbar" >
       <nav>
         <a href="./new.htm">Add new</a> |
@@ -41,6 +42,7 @@
 
     <div>
       <h2> Overview: </h2>
+        
       <table id= "tasktable"  >
       <tr>
         <th> Task desription </th>
@@ -63,6 +65,7 @@
 
       </table>
     <a href="./new.htm" class="btn btn-info" > + </a>
+      <script>updateTableIfNecessary(); </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
