@@ -37,7 +37,7 @@ function updateTableIfNecessary(){
     desccell.innerHTML = localStorage.taskdescription;
     completioncell.innerHTML=localStorage.locompletion;
     deadlinecell.innerHTML=localStorage.deadline;
-    buttoncell.innerHTML= '<button type="button" class="btn btn-primary"> X </button>' ;
+    buttoncell.innerHTML= '<button type="button" class="btn btn-primary" onclick=deleteshit();> X </button>' ;
 
     localStorage.NewTaskFlag = "0";
     localStorage.actualtable = table.outerHTML;
@@ -49,4 +49,10 @@ function updateTableIfNecessary(){
     }
 
   }
+}
+
+
+function deleteshit(){
+  var tmp=event.target.parentNode.parentNode;
+         tmp.parentNode.removeChild(tmp);
 }
