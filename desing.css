@@ -1,0 +1,11 @@
+h1
+{
+    text-align: center;
+}
+
+#navbar
+{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
