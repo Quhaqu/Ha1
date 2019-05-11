@@ -30,12 +30,9 @@
 }
     function CreateTableFromJSON(dataaa) {
       response = dataaa.data;
-
-      //response[2]
-      //console.log(response);
-        // EXTRACT VALUE FOR HTML HEADER.
-        // ('Book ID', 'Book Name', 'Category' and 'Price')
-
+      for (var i = 0; i < response.length; i++) {
+      response[i].deadline = response[i].deadline.substring(0,10);
+      }
 
         console.log(response.length);
         var stuff = [];
@@ -72,7 +69,7 @@
             }
         }
         for (var i = 0; i < response.length; i++) {
-          
+
         }
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
