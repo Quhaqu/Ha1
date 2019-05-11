@@ -86,6 +86,15 @@ app.get('/impressum.html', function(req, res) {
     });	
 });
 
+app.get('/desing.css', function(req, res) {
+	//res.json({ message: 'hooray! welcome to our api!' });
+	fs.readFile('desing.css',function (err, data){
+        res.writeHead(200, {'Content-Type': 'text/css','Content-Length':data.length});
+        res.write(data);
+        res.end();
+    });	
+});
+
 // on routes that end in /bears
 // ----------------------------------------------------
 router.route('/todos')
@@ -102,10 +111,8 @@ router.route('/todos')
 			if (err)
 				res.send(err);
 
-			res.json({ message: 'Todo created!' });
+			res.json("Todo Created");
 		});
-
-		
 	})
 
 	// get all the bears (accessed at GET http://localhost:8080/api/bears)
@@ -145,7 +152,7 @@ router.route('/todos/:todo_id')
 			if (err)
 				res.send(err);
 
-			res.json({ message: 'Todo created!' });
+			res.json({ message: 'Todo updated!' });
 		});
 
 		});
