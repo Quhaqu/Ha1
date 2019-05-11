@@ -6,6 +6,7 @@ var express    = require('express');
 var bodyParser = require('body-parser');
 var app        = express();
 var morgan     = require('morgan');
+var fs = require('fs');
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
@@ -29,7 +30,7 @@ db.once('open', function() {
 });
 
 // Bear models lives here
-var Bear     = require('./app/models/bear');
+var Todo     = require('./app/models/bear');
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -37,33 +38,71 @@ var Bear     = require('./app/models/bear');
 // create our router
 var router = express.Router();
 
-// middleware to use for all requests
-router.use(function(req, res, next) {
-	// do logging
-	console.log('Something is happening.');
-	next();
+// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+
+
+app.get('/', function(req, res) {
+	//res.json({ message: 'hooray! welcome to our api!' });
+	fs.readFile('todos.html',function (err, data){
+        res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+        res.write(data);
+        res.end();
+    });	
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-	res.json({ message: 'hooray! welcome to our api!' });	
+app.get('/todos.html', function(req, res) {
+	//res.json({ message: 'hooray! welcome to our api!' });
+	fs.readFile('todos.html',function (err, data){
+        res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+        res.write(data);
+        res.end();
+    });	
+});
+
+app.get('/createtodo.html', function(req, res) {
+	//res.json({ message: 'hooray! welcome to our api!' });
+	fs.readFile('createtodo.html',function (err, data){
+        res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+        res.write(data);
+        res.end();
+    });	
+});
+
+app.get('/howto.html', function(req, res) {
+	//res.json({ message: 'hooray! welcome to our api!' });
+	fs.readFile('howto.html',function (err, data){
+        res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+        res.write(data);
+        res.end();
+    });	
+});
+
+app.get('/impressum.html', function(req, res) {
+	//res.json({ message: 'hooray! welcome to our api!' });
+	fs.readFile('impressum.html',function (err, data){
+        res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+        res.write(data);
+        res.end();
+    });	
 });
 
 // on routes that end in /bears
 // ----------------------------------------------------
-router.route('/bears')
+router.route('/todos')
 
 	// create a bear (accessed at POST http://localhost:8080/bears)
 	.post(function(req, res) {
 		
-		var bear = new Bear();		// create a new instance of the Bear model
-		bear.name = req.body.name;  // set the bears name (comes from the request)
+		var todo = new Todo();		// create a new instance of the Bear model
+		todo.todo = req.body.todo;  // set the bears name (comes from the request)
+		todo.deadline = req.body.deadline;
+		todo.done = req.body.done;
 
-		bear.save(function(err) {
+		todo.save(function(err) {
 			if (err)
 				res.send(err);
 
-			res.json({ message: 'Bear created!' });
+			res.json({ message: 'Todo created!' });
 		});
 
 		
@@ -71,50 +110,52 @@ router.route('/bears')
 
 	// get all the bears (accessed at GET http://localhost:8080/api/bears)
 	.get(function(req, res) {
-		Bear.find(function(err, bears) {
+		Todo.find(function(err, todos) {
 			if (err)
 				res.send(err);
 
-			res.json(bears);
+			res.json(todos);
 		});
 	});
 
 // on routes that end in /bears/:bear_id
 // ----------------------------------------------------
-router.route('/bears/:bear_id')
+router.route('/todos/:todo_id')
 
 	// get the bear with that id
 	.get(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+		Todo.findById(req.params.todo_id, function(err, todo) {
 			if (err)
 				res.send(err);
-			res.json(bear);
+			res.json(todo);
 		});
 	})
 
 	// update the bear with this id
 	.put(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+		Todo.findById(req.params.todo_id, function(err, todo) {
 
 			if (err)
 				res.send(err);
+		        todo.todo = req.body.todo;  // set the bears name (comes from the request)
+		        todo.deadline = req.body.deadline;
+		        todo.done = req.body.done;
 
-			bear.name = req.body.name;
-			bear.save(function(err) {
-				if (err)
-					res.send(err);
+		todo.save(function(err) {
+			if (err)
+				res.send(err);
 
-				res.json({ message: 'Bear updated!' });
-			});
+			res.json({ message: 'Todo created!' });
+		});
 
 		});
 	})
 
 	// delete the bear with this id
 	.delete(function(req, res) {
-		Bear.remove({
-			_id: req.params.bear_id
-		}, function(err, bear) {
+		Todo.remove({
+			_id: req.params.todo_id
+		}, function(err, todo) {
 			if (err)
 				res.send(err);
 
