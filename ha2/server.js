@@ -29,7 +29,7 @@ db.once('open', function() {
   console.log("DB connection alive");
 });
 
-// Bear models lives here
+// Todo model is here
 var Todo     = require('./app/models/bear');
 
 // ROUTES FOR OUR API
@@ -47,7 +47,7 @@ app.get('/', function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/todos.html', function(req, res) {
@@ -56,7 +56,7 @@ app.get('/todos.html', function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/createtodo.html', function(req, res) {
@@ -65,7 +65,7 @@ app.get('/createtodo.html', function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/howto.html', function(req, res) {
@@ -74,7 +74,7 @@ app.get('/howto.html', function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/impressum.html', function(req, res) {
@@ -83,7 +83,7 @@ app.get('/impressum.html', function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/desing.css', function(req, res) {
@@ -92,18 +92,18 @@ app.get('/desing.css', function(req, res) {
         res.writeHead(200, {'Content-Type': 'text/css','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
-// on routes that end in /bears
+// on routes that end in /todos
 // ----------------------------------------------------
 router.route('/todos')
 
-	// create a bear (accessed at POST http://localhost:8080/bears)
+	// create a todo (accessed at POST http://localhost:8080/todos)
 	.post(function(req, res) {
-		
-		var todo = new Todo();		// create a new instance of the Bear model
-		todo.todo = req.body.todo;  // set the bears name (comes from the request)
+
+		var todo = new Todo();		// create a new instance of the todo model
+		todo.todo = req.body.todo;  // set the todos name (comes from the request)
 		todo.deadline = req.body.deadline;
 		todo.done = req.body.done;
 
@@ -112,10 +112,11 @@ router.route('/todos')
 				res.send(err);
 
 			res.json("Todo Created");
+    
 		});
 	})
 
-	// get all the bears (accessed at GET http://localhost:8080/api/bears)
+	// get all the todos (accessed at GET http://localhost:8080/api/todos)
 	.get(function(req, res) {
 		Todo.find(function(err, todos) {
 			if (err)
@@ -125,11 +126,11 @@ router.route('/todos')
 		});
 	});
 
-// on routes that end in /bears/:bear_id
+// on routes that end in /todos/:todo_id
 // ----------------------------------------------------
 router.route('/todos/:todo_id')
 
-	// get the bear with that id
+	// get the todo with that id
 	.get(function(req, res) {
 		Todo.findById(req.params.todo_id, function(err, todo) {
 			if (err)
@@ -138,7 +139,7 @@ router.route('/todos/:todo_id')
 		});
 	})
 
-	// update the bear with this id
+	// update the todo with this id
 	.put(function(req, res) {
 		Todo.findById(req.params.todo_id, function(err, todo) {
 
