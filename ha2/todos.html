@@ -36,7 +36,7 @@
 
       //  console.log(response.length);
         var stuff = [];
-        for (var i = 1; i < 4; i++) {
+        for (var i = 0; i < 4; i++) {
             for (var key in response[i]) {
                 if (stuff.indexOf(key) === -1) {
                     stuff.push(key);
@@ -105,16 +105,18 @@
 
     function editshit(ident){
       console.log(ident.id);
+      sessionStorage.setItem("editID", ident.id);
+      location.href = "http://localhost:8080/edittodo.html";
     }
 
-    /*
+
     function deleteshit(ident){
       console.log(ident.id + " will be deleted.");
       var url = "http://localhost:8080/api/todos/" + ident.id;
       console.log(url);
       axios.delete(url).then(function (){createTable()});
 
-    }*/
+    }
     </script>
   </head>
 
