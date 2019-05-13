@@ -51,31 +51,7 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Beispielseite mit dem Bootstrap Framework anlegen</td>
-          <td>25. April 2019</td>
-          <td>100%</td>
-          <td><button class="btn btn-primary" type="submit">bearbeiten</button></td>
-          <td><button class="btn btn-primary" type="submit">löschen</button></td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Navbar einfügen und gestalten</td>
-          <td>25. April 2019</td>
-          <td>100%</td>
-          <td><button class="btn btn-primary" type="submit">bearbeiten</button></td>
-          <td><button class="btn btn-primary" type="submit">löschen</button></td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Tabele kleiner machen</td>
-          <td>25. April 2019</td>
-          <td>0%</td>
-          <td><button class="btn btn-primary" type="submit">bearbeiten</button></td>
-          <td><button class="btn btn-primary" type="submit">löschen</button></td>
-        </tr>
+      <tbody id="content">
       </tbody>
     </table>
 
@@ -86,6 +62,136 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <script>
+        var el = document.getElementById('content');
+        var z = 0;
+
+        fetch('http://localhost:8080/api/todos')
+          .then(res => res.json())
+          .then(function(json){
+              for(let i=0; i<json.length; i++){
+
+                  let tr = document.createElement("tr");
+                  let th = document.createElement("th");
+                  th.scope = "row";
+                  let td_todo = document.createElement("td");
+                  let td_date = document.createElement("td");
+                  let td_done = document.createElement("td");
+                  let td_change = document.createElement("td");
+                  let td_delete = document.createElement("td");
+                  let del = document.createElement("button");
+                  del.className = "btn btn-primary";
+                  del.type = "submit";
+                  let be = document.createElement("button");
+                  be.className = "btn btn-primary";
+                  be.type = "submit";
+
+                  th.innerHTML = i+1;
+                  td_todo.innerHTML = json[i].todo;
+                  let d = new Date(json[i].deadline);
+                  let month = d.getMonth();
+                  let day = d.getDate();
+                  let year = d.getFullYear();
+                  td_date.innerHTML = day.toString()+"."+month.toString()+"."+year;
+                  td_done.innerHTML = json[i].done+"%";
+                  del.id = json[i]._id;
+                  be.id = json[i]._id;
+                  del.innerHTML = "löschen";
+                  be.innerHTML = "bearbeiten";
+
+                  del.addEventListener("click", function(){
+                    fetch("http://localhost:8080/api/todos/"+json[i]._id,
+                    {
+                        method: "DELETE"
+                    })
+                    .then(response => response.json())
+                    .then(function(response){
+                        tr.parentNode.removeChild(tr);
+                    })
+                    .catch(error => console.error('Error:', error));
+                  }); 
+
+                  be.addEventListener("click", function(){
+                    let intodo = document.createElement("input");
+                    intodo.type = "text";
+                    intodo.className = "form-control"
+                    intodo.name = "todo";
+                    let indate = document.createElement("input");
+                    indate.type = "date";
+                    indate.className = "form-control";
+                    indate.name = "deadline";
+                    let indone = document.createElement("input");
+                    indone.type = "number";
+                    indone.className = "form-control";
+                    indone.min = "0";
+                    indone.max = "100";
+                    indone.name = "done";
+                    let sub = document.createElement("button");
+                    sub.type = "submit";
+                    sub.className = "btn btn-primary";
+                    sub.innerHTML = "Submit";
+                    
+                    sub.addEventListener("click",function(){
+                      let ob = {
+                        todo: intodo.value,
+                        done: indone.value,
+                        deadline: indate.value
+                      }
+
+                      fetch("http://localhost:8080/api/todos/"+json[i]._id,
+                      {
+                          method: "put",
+                          headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify(ob)
+                      })
+                      .then(response => response.json())
+                      .then(function(response){
+                        td_todo.removeChild(intodo);
+                        td_todo.innerHTML = intodo.value;
+                        td_date.removeChild(indate);
+                        td_date.innerHTML = indate.value;
+                        td_done.removeChild(indone);
+                        td_done.innerHTML = indone.value;
+                        td_change.removeChild(sub);
+                        td_change.appendChild(be);
+                      })
+                      .catch(error => console.error('Error:', error));
+                    });
+
+                    intodo.value = td_todo.innerHTML;
+                    td_todo.innerHTML = "";
+                    td_todo.appendChild(intodo);
+                    td_date.innerHTML = "";
+                    td_date.appendChild(indate);
+                    td_done.innerHTML = "";
+                    td_done.appendChild(indone);
+
+                    td_change.removeChild(be);
+                    td_change.appendChild(sub);
+
+                    
+                  });
+
+                  td_change.appendChild(be);
+                  td_delete.appendChild(del);
+
+                  tr.appendChild(th);
+                  tr.appendChild(td_todo);
+                  tr.appendChild(td_date);
+                  tr.appendChild(td_done);
+                  tr.appendChild(td_change);
+                  tr.appendChild(td_delete);
+
+                  el.appendChild(tr);
+              }
+          })
+          
+    </script>
+
   </body>
 
 </html>
