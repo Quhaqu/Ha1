@@ -29,7 +29,7 @@ db.once('open', function() {
   console.log("DB connection alive");
 });
 
-// Bear models lives here
+// Todo schema gets delivered
 var Todo     = require('./app/models/bear');
 
 // ROUTES FOR OUR API
@@ -42,70 +42,69 @@ var router = express.Router();
 
 
 app.get('/', function(req, res) {
-	//res.json({ message: 'hooray! welcome to our api!' });
+
 	fs.readFile('todos.html',function (err, data){
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/todos.html', function(req, res) {
-	//res.json({ message: 'hooray! welcome to our api!' });
+
 	fs.readFile('todos.html',function (err, data){
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/createtodo.html', function(req, res) {
-	//res.json({ message: 'hooray! welcome to our api!' });
+
 	fs.readFile('createtodo.html',function (err, data){
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/howto.html', function(req, res) {
-	//res.json({ message: 'hooray! welcome to our api!' });
+
 	fs.readFile('howto.html',function (err, data){
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/impressum.html', function(req, res) {
-	//res.json({ message: 'hooray! welcome to our api!' });
+
 	fs.readFile('impressum.html',function (err, data){
         res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
 app.get('/desing.css', function(req, res) {
-	//res.json({ message: 'hooray! welcome to our api!' });
+
 	fs.readFile('desing.css',function (err, data){
         res.writeHead(200, {'Content-Type': 'text/css','Content-Length':data.length});
         res.write(data);
         res.end();
-    });	
+    });
 });
 
-// on routes that end in /bears
 // ----------------------------------------------------
 router.route('/todos')
 
-	// create a bear (accessed at POST http://localhost:8080/bears)
+	// create todo (accessed at POST http://localhost:8080/todo)
 	.post(function(req, res) {
-		
+
 		var todo = new Todo();		// create a new instance of the Bear model
-		todo.todo = req.body.todo;  // set the bears name (comes from the request)
-		todo.deadline = req.body.deadline;
-		todo.done = req.body.done;
+		todo.todo = req.body.todo;  // set the todo name (comes from the request)
+		todo.deadline = req.body.deadline; //set todo deadline
+		todo.done = req.body.done; // etc
 
 		todo.save(function(err) {
 			if (err)
@@ -115,7 +114,7 @@ router.route('/todos')
 		});
 	})
 
-	// get all the bears (accessed at GET http://localhost:8080/api/bears)
+	// get all todos (accessed at GET http://localhost:8080/api/bears)
 	.get(function(req, res) {
 		Todo.find(function(err, todos) {
 			if (err)
@@ -125,11 +124,11 @@ router.route('/todos')
 		});
 	});
 
-// on routes that end in /bears/:bear_id
+// on routes that end in todos/todoid
 // ----------------------------------------------------
 router.route('/todos/:todo_id')
 
-	// get the bear with that id
+	// get todo with that id
 	.get(function(req, res) {
 		Todo.findById(req.params.todo_id, function(err, todo) {
 			if (err)
@@ -138,13 +137,13 @@ router.route('/todos/:todo_id')
 		});
 	})
 
-	// update the bear with this id
+	// update todo with this id
 	.put(function(req, res) {
 		Todo.findById(req.params.todo_id, function(err, todo) {
 
 			if (err)
 				res.send(err);
-		        todo.todo = req.body.todo;  // set the bears name (comes from the request)
+		        todo.todo = req.body.todo;  // change todo (comes from the request)
 		        todo.deadline = req.body.deadline;
 		        todo.done = req.body.done;
 
@@ -158,7 +157,7 @@ router.route('/todos/:todo_id')
 		});
 	})
 
-	// delete the bear with this id
+	// delete the todo with this id
 	.delete(function(req, res) {
 		Todo.remove({
 			_id: req.params.todo_id
